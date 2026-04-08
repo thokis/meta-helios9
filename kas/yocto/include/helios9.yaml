@@ -1,0 +1,20 @@
+header:
+    version: 18
+
+distro: helios9-distro
+target: helios9-image-minimal
+
+repos:
+    meta-helios9:
+        url: https://github.com/thokis/meta-helios9.git
+        branch: scarthgap
+
+local_conf_header:
+    debug: |-
+        EXTRA_IMAGE_FEATURES += "debug-tweaks"
+    journal: |-
+        VOLATILE_LOG_DIR = "no"
+    kernel_modules: |-
+        IMAGE_INSTALL:append = " kernel-modules"
+    systemd: |-
+        ROOT_HOME = "/root"

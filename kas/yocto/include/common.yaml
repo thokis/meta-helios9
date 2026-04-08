@@ -1,0 +1,28 @@
+header:
+    version: 18
+
+repos:
+    poky:
+        url: https://git.yoctoproject.org/git/poky
+        branch: scarthgap
+        layers:
+            meta:
+            meta-poky:
+            meta-yocto-bsp:
+
+    meta-openembedded:
+        url: https://git.openembedded.org/meta-openembedded
+        branch: scarthgap
+        layers:
+            meta-networking:
+            meta-python:
+            meta-oe:
+
+local_conf_header:
+    history: |-
+        INHERIT += "buildhistory"
+    local_dirs: |-
+        DL_DIR = "/home/yocto/kas/.dl"
+        SSTATE_DIR = "/home/yocto/kas/.sstate-cache"
+    sstate-mirrors: |-
+        SSTATE_MIRRORS = "file://.* http://yoctoproject.org"

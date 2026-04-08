@@ -1,0 +1,6 @@
+/kas/yocto/*
+!/kas/yocto/include
+!/kas/yocto/qemuarm_64.yaml
+!/kas/yocto/qemuarm.yaml
+!/kas/yocto/rpi3_64.yaml
+!/kas/yocto/rpi3.yaml

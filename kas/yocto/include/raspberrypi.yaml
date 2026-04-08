@@ -1,0 +1,20 @@
+header:
+    version: 18
+
+repos:
+    meta-raspberrypi:
+        url: https://github.com/agherzan/meta-raspberrypi.git
+        branch: scarthgap
+
+    meta-lts-mixins-uboot:
+        url: https://git.yoctoproject.org/meta-lts-mixins
+        commit: a44882db02a0ed0f149371831bfbe067665eb42b
+
+local_conf_header:
+    raspberrypi: |-
+        RPI_USE_U_BOOT = "1"
+        ENABLE_UART = "1"
+        IMAGE_INSTALL:append = " kernel-image kernel-devicetree"
+        IMAGE_FSTYPES:remove = " rpi-sdimg"
+        ENABLE_I2C = "1"
+        LICENSE_FLAGS_ACCEPTED = "synaptics-killswitch"

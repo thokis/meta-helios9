@@ -1,0 +1,8 @@
+header:
+    version: 18
+    includes:
+        - include/common.yaml
+        - include/helios9.yaml
+        - include/raspberrypi.yaml
+
+machine: raspberrypi3-64
