@@ -48,6 +48,8 @@ SRC_URI:append:libc-musl = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-lld',
 
 SRCREV = "56b51b98fbb8627c4c09a483702e18fd8aee7ce1"
 
+S = "${WORKDIR}/git"
+
 # ['auto', 'symlink', 'file', 'netconfig', 'resolvconf']
 NETWORKMANAGER_DNS_RC_MANAGER_DEFAULT ??= "auto"
 
