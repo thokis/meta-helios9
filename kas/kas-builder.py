@@ -143,7 +143,7 @@ def get_kas_config():
     config["distro"] = get_distro()
     config["header"] = dict()
     config["header"]["version"] = 18
-    config["header"]["includes"] = ["include/common.yaml", "include/helios9.yaml"]
+    config["header"]["includes"] = ["include/common.yaml"]
 
     machine = get_machine()
     config["machine"] = machine

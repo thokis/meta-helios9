@@ -6,13 +6,3 @@ target: helios9-image-minimal
 
 repos:
     meta-helios9:
-
-local_conf_header:
-    debug: |-
-        EXTRA_IMAGE_FEATURES += "debug-tweaks"
-    journal: |-
-        VOLATILE_LOG_DIR = "no"
-    kernel_modules: |-
-        IMAGE_INSTALL:append = " kernel-modules"
-    systemd: |-
-        ROOT_HOME = "/root"

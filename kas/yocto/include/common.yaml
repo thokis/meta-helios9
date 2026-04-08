@@ -19,10 +19,18 @@ repos:
             meta-oe:
 
 local_conf_header:
+    debug: |-
+        EXTRA_IMAGE_FEATURES += "debug-tweaks"
     history: |-
         INHERIT += "buildhistory"
+    journal: |-
+        VOLATILE_LOG_DIR = "no"
+    kernel_modules: |-
+        IMAGE_INSTALL:append = " kernel-modules"
     local_dirs: |-
         DL_DIR = "/home/kas/yocto/.dl"
         SSTATE_DIR = "/home/kas/yocto.sstate-cache"
     sstate-mirrors: |-
         SSTATE_MIRRORS = "file://.* http://yoctoproject.org"
+    systemd: |-
+        ROOT_HOME = "/root"
