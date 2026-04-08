@@ -22,7 +22,7 @@ local_conf_header:
     history: |-
         INHERIT += "buildhistory"
     local_dirs: |-
-        DL_DIR = "/home/yocto/kas/.dl"
-        SSTATE_DIR = "/home/yocto/kas/.sstate-cache"
+        DL_DIR = "/home/kas/yocto/.dl"
+        SSTATE_DIR = "/home/kas/yocto.sstate-cache"
     sstate-mirrors: |-
         SSTATE_MIRRORS = "file://.* http://yoctoproject.org"
