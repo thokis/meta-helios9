@@ -1,0 +1,15 @@
+[connection]
+id=wwan0
+uuid=564614e3-29ac-49eb-b5dd-3600206b53d8
+type=gsm
+autoconnect-retries=-1
+permissions=
+
+[gsm]
+apn=internet
+
+[ipv4]
+method=auto
+
+[ipv6]
+method=disabled

@@ -1,0 +1,3 @@
+bootloader --ptable gpt-hybrid
+part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 100 --mbr
+part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 4096 --size 512M --part-type ${ROOT_PART_TYPE}
