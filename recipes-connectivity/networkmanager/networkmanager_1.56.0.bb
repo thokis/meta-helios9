@@ -38,7 +38,7 @@ DEPENDS:append:class-target = " bash-completion"
 inherit meson gettext update-rc.d systemd gobject-introspection update-alternatives upstream-version-is-even pkgconfig
 
 SRC_URI = " \
-    git://github.com/NetworkManager/NetworkManager.git;protocol=https;branch=nm-1-56;tag=${PV} \
+    git://github.com/NetworkManager/NetworkManager.git;protocol=https;branch=nm-1-56 \
     file://${BPN}.initd \
     file://enable-dhcpcd.conf \
     file://enable-iwd.conf \
