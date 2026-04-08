@@ -2,6 +2,7 @@
 #
 # /// script
 # dependencies = [
+#   "coloredlogs",
 #   "docker",
 #   "pyyaml",
 #   "questionary",
@@ -24,6 +25,7 @@ import time
 import tomllib
 from enum import IntEnum
 
+import coloredlogs
 import docker
 import tomli_w
 import questionary
@@ -124,8 +126,14 @@ def get_default_branch(name: str, url: str):
             "git ls-remote failed for %s (%s): %s", name, url, result.stdout.decode()
         )
         raise RuntimeError(f"failed to fetch default branch from {name} ({url})")
+
     match = re.search(r"ref: refs/heads/(.*)HEAD", result.stdout.decode())
-    return match.group(1).rstrip() if match else None
+    if match:
+        default_branch = match.group(1).rstrip()
+        logger.debug(
+            "fetched default branch %s from %s (%s)", default_branch, name, url
+        )
+        return default_branch
 
 
 def get_distro():
@@ -199,7 +207,6 @@ def get_layer_path(name: str) -> pathlib.Path:
 
 def get_latest_commit_from_branch(branch: str, url: str):
     command = f"git ls-remote {url} refs/heads/{branch}"
-    command += " | awk '{print $1}'"
     with CONSOLE.status(
         f"[bold italic]fetching latest commit from [#FF9D00]{branch}",
         spinner="bouncingBar",
@@ -213,7 +220,12 @@ def get_latest_commit_from_branch(branch: str, url: str):
             "git ls-remote failed for %s (%s): %s", branch, url, result.stdout.decode()
         )
         raise RuntimeError(f"failed to fetch latest commit from {branch} ({url})")
-    result.stdout.decode()
+
+    match = re.search(r"^(\w+)", result.stdout.decode())
+    if match:
+        commit = match.group(1).rstrip()
+        logger.debug("fetched commit %s from %s (%s)", commit, branch, url)
+        return commit
 
 
 def get_machine():
@@ -274,13 +286,13 @@ def main():
     parser.add_argument("-vvv", action="store_true", help="trace level logging")
     args = parser.parse_args()
 
-    logging.basicConfig(
+    coloredlogs.install(
         level=logging.DEBUG
         if args.vvv or args.vv
         else logging.INFO
         if args.v
         else logging.WARNING,
-        format="%(asctime)s [%(levelname)s] [%(name)s:%(lineno)d] %(message)s",
+        logger=logger,
     )
 
     yaml.add_representer(str, __yaml_str_representer__)
@@ -320,12 +332,12 @@ def main():
             kas_builder_settings = tomllib.load(f)
 
         if (
-            "kas" not in kas_builder_settings
+            "layer" not in kas_builder_settings
             or kas_builder_settings["layer"].get("path") is None
         ):
             raise FileNotFoundError()
         else:
-            layer_repo_path = pathlib.Path(kas_builder_settings["layer"]["path"])
+            layer_path = pathlib.Path(kas_builder_settings["layer"]["path"])
     except FileNotFoundError:
         layer_path = get_layer_path(LAYER["name"])
         kas_builder_settings = dict()
@@ -339,7 +351,7 @@ def main():
         yaml.dump(kas_config, indent=4, default_flow_style=False)
     )
 
-    command = "kas build custom.yaml"
+    command = "uv run kas build"
     logger.info("executing command '%s'", command)
 
     client = docker.from_env()
