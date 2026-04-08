@@ -25,6 +25,6 @@ RUN uv venv .venv
 RUN uv pip install kas
 RUN echo ". /home/${USER_NAME}/.venv/bin/activate" >> /home/${USER_NAME}/.bashrc
 
-WORKDIR /home/${USER_NAME}/yocto
+WORKDIR /home/${USER_NAME}/meta-helios9/kas/yocto
 
 CMD [ "bash" ]

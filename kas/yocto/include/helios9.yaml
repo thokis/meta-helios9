@@ -6,3 +6,4 @@ target: helios9-image-minimal
 
 repos:
     meta-helios9:
+        path: ../../

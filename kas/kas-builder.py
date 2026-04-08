@@ -186,14 +186,14 @@ def get_kas_config():
     return config
 
 
-def get_kas_path() -> pathlib.Path:
-    kas_path = questionary.path(
-        "path to kas repository",
+def get_layer_path(name: str) -> pathlib.Path:
+    layer_path = questionary.path(
+        f"path to {name} repository",
         style=CUSTOM_STYLE,
     ).ask()
 
-    if kas_path:
-        return pathlib.Path(kas_path)
+    if layer_path:
+        return pathlib.Path(layer_path)
     raise KeyboardInterrupt()
 
 
@@ -321,16 +321,16 @@ def main():
 
         if (
             "kas" not in kas_builder_settings
-            or kas_builder_settings["kas"].get("path") is None
+            or kas_builder_settings["layer"].get("path") is None
         ):
             raise FileNotFoundError()
         else:
-            kas_path = pathlib.Path(kas_builder_settings["kas"]["path"])
+            layer_repo_path = pathlib.Path(kas_builder_settings["layer"]["path"])
     except FileNotFoundError:
-        kas_path = get_kas_path()
+        layer_path = get_layer_path(LAYER["name"])
         kas_builder_settings = dict()
-        kas_builder_settings["kas"] = dict()
-        kas_builder_settings["kas"]["path"] = str(kas_path)
+        kas_builder_settings["layer"] = dict()
+        kas_builder_settings["layer"]["path"] = str(layer_path)
 
     with (PATH / "settings.toml").open("wb") as f:
         tomli_w.dump(kas_builder_settings, f)
@@ -367,13 +367,13 @@ def main():
                 volumes=[
                     f"{str(ssh_known_hosts)}:/home/kas/.ssh/known_hosts:ro",
                     f"{ssh_auth_sock}:/ssh-agent:ro",
-                    f"{str(kas_path)}/yocto:/home/kas/yocto:z",
-                    f"{str(PATH / 'kas.yaml')}:/home/kas/yocto/.config.yaml:ro",
+                    f"{str(layer_path)}:/home/kas/{LAYER['name']}:z",
+                    f"{str(PATH / 'kas.yaml')}:/home/kas/{LAYER['name']}/kas/yocto/.config.yaml:ro",
                 ],
                 user=user,
                 detach=True,
                 stop_signal="SIGINT",
-                working_dir="/home/kas/yocto",
+                working_dir=f"/home/kas/{LAYER['name']}/kas/yocto",
             )
 
             status = container.wait()
@@ -428,9 +428,11 @@ def main():
                 [
                     "docker",
                     "run",
-                    "-it",
-                    "--rm",
+                    "--network=host",
                     "--privileged",
+                    "--rm",
+                    f"--user {user}",
+                    "-it",
                     "-e",
                     "SSH_AUTH_SOCK=/ssh-agent",
                     "-v",
@@ -440,19 +442,18 @@ def main():
                     "-v",
                     f"{ssh_auth_sock}:/ssh-agent:ro",
                     "-v",
-                    f"{str(kas_path)}/yocto:/home/kas/yocto:z",
+                    f"{str(layer_path)}:/home/kas/{LAYER['name']}:z",
                     "-v",
-                    f"{str(PATH / 'kas.yaml')}:/home/kas/yocto/.config.yaml:ro",
+                    f"{str(PATH / 'kas.yaml')}:/home/kas/{LAYER['name']}/kas/yocto/.config.yaml:ro",
                     "-v",
                     "/tmp:/tmp",
                     "-w",
-                    "/home/kas/yocto",
+                    f"/home/kas/{LAYER['name']}/kas/yocto",
                     "yocto.kas",
                     "uv",
                     "run",
                     "kas",
                     "shell",
-                    "qemuarm.yaml",
                     "-c",
                     'runqemu nographic slirp qemuparams="-serial unix:{sock_path},server,nowait -device usb-host,vendorid=0x2c7c,productid=0x6002,bus=usb-bus.0,id=modem"',
                 ],

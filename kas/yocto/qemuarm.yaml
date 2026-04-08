@@ -1,8 +1,15 @@
 header:
     version: 18
     includes:
-        - include/common.yaml
-        - include/helios9.yaml
-        - include/qemuarm.yaml
+        - repo: meta-helios9
+          file: kas/yocto/include/common.yaml
+        - repo: meta-helios9
+          file: kas/yocto/include/helios9.yaml
+        - repo: meta-helios9
+          file: kas/yocto/include/qemuarm.yaml
 
 machine: qemuarm
+
+repos:
+    meta-helios9:
+        path: ../../

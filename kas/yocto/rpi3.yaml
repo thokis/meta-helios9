@@ -1,8 +1,15 @@
 header:
     version: 18
     includes:
-        - include/common.yaml
-        - include/helios9.yaml
-        - include/raspberrypi.yaml
+        - repo: meta-helios9
+          file: kas/yocto/include/common.yaml
+        - repo: meta-helios9
+          file: kas/yocto/include/helios9.yaml
+        - repo: meta-helios9
+          file: kas/yocto/include/raspberrypi.yaml
 
 machine: raspberrypi3
+
+repos:
+    meta-helios9:
+        path: ../../
