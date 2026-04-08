@@ -6,8 +6,6 @@ target: helios9-image-minimal
 
 repos:
     meta-helios9:
-        url: https://github.com/thokis/meta-helios9.git
-        branch: scarthgap
 
 local_conf_header:
     debug: |-
