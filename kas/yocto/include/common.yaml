@@ -1,6 +1,9 @@
 header:
     version: 18
 
+distro: helios9-distro
+target: helios9-image-minimal
+
 repos:
     poky:
         url: https://git.yoctoproject.org/git/poky
@@ -18,6 +21,9 @@ repos:
             meta-python:
             meta-oe:
 
+    meta-helios9:
+        path: ../../
+
 local_conf_header:
     debug: |-
         EXTRA_IMAGE_FEATURES += "debug-tweaks"
@@ -25,8 +31,6 @@ local_conf_header:
         INHERIT += "buildhistory"
     journal: |-
         VOLATILE_LOG_DIR = "no"
-    kernel_modules: |-
-        IMAGE_INSTALL:append = " kernel-modules"
     local_dirs: |-
         DL_DIR = "/home/kas/yocto/.dl"
         SSTATE_DIR = "/home/kas/yocto.sstate-cache"

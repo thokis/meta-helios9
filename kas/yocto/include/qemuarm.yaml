@@ -8,3 +8,18 @@ repos:
         layers:
             meta-arm:
             meta-arm-toolchain:
+
+local_conf_header:
+    qemu-usb: |-
+        PACKAGECONFIG:append:pn-qemu-system-native = " libusb"
+    qmeu-serial: |-
+        QB_KERNEL_CMDLINE_APPEND:append = " console=ttyAMA0"
+    qemu-wic: |-
+        WKS_FILE = "qemuarm-custom.wks"
+        IMAGE_FSTYPES = "wic"
+        IMAGE_BOOT_FILES = " "
+        WKS_FILE_DEPENDS:append = " e2fsprogs-native"
+        QB_DEFAULT_FSTYPE = "wic"
+        QB_DRIVE_TYPE = "/dev/vd"
+        QB_KERNEL_ROOT = "/dev/vda1"
+        QB_FSINFO = "wic:no-kernel-in-fs"

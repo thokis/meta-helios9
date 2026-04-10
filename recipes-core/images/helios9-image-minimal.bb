@@ -8,6 +8,8 @@ IMAGE_INSTALL:append = " \
     e2fsprogs-resize2fs \
     util-linux \
     \
+    kernel-modules \
+    \
     networkmanager \
     \
     openssh-sftp-server \

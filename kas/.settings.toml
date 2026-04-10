@@ -1,0 +1,21 @@
+distros = [
+    "helios9-distro",
+]
+
+targets = [
+    "helios9-image-minimal",
+    "helios9-image-wwan",
+]
+
+[layer]
+name = "meta-helios9"
+url = "https://github.com/thokis/meta-helios9.git"
+
+[machines.raspberrypi3-64]
+includes = ["kas/yocto/include/raspberrypi.yaml"]
+
+[machines.raspberrypi4-64]
+includes = ["kas/yocto/include/raspberrypi.yaml"]
+
+[machines.qemuarm64]
+includes = ["kas/yocto/include/qemuarm.yaml"]

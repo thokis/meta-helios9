@@ -1,0 +1,5 @@
+bootloader --ptable gpt
+part / --source rootfs --ondisk vda --fstype ext4 --label rootfs1 --align 4096 --fixed-size 1G
+part rootfs2           --ondisk vda --fstype ext4 --label rootfs2 --align 4096 --fixed-size 1G
+part /data             --ondisk vda --fstype ext4 --label data    --align 4096 --fixed-size 2G
+part /info             --ondisk vda --fstype ext4 --label info    --align 4096 --fixed-size 512M

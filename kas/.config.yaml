@@ -1,15 +1,13 @@
+distro: helios9-distro
 header:
     version: 18
     includes:
         - repo: meta-helios9
           file: kas/yocto/include/common.yaml
         - repo: meta-helios9
-          file: kas/yocto/include/helios9.yaml
-        - repo: meta-helios9
           file: kas/yocto/include/qemuarm.yaml
-
 machine: qemuarm64
-
 repos:
     meta-helios9:
-        path: ../../
+        path: /home/kas/meta-helios9
+target: helios9-image-minimal

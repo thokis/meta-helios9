@@ -10,6 +10,6 @@ docker run \
     -v "${SSH_AUTH_SOCK}:/ssh-agent" \
     -v "${HOME}/.ssh/known_hosts:/home/kas/.ssh/known_hosts:ro" \
     -v "$(pwd)/..:/home/kas/meta-helios9:z" \
-    -v "/home/thomaskiss/.local/share/kas-builder/kas.yaml:/home/kas/meta-helios9/kas/yocto/.config.yaml:ro" \
+    -v "/home/thomaskiss/.local/share/kas-builder/meta-helios9.yaml:/home/kas/meta-helios9/kas/yocto/.config.yaml:ro" \
     -w /home/kas/meta-helios9/kas/yocto \
-    yocto.kas
+    meta-helios9

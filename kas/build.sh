@@ -2,4 +2,4 @@
 
 set -e
 
-docker build --build-arg USER_ID=${UID} -t yocto.kas -f Dockerfile.kas .
+docker build --build-arg USER_ID=${UID} -t meta-helios9 -f Dockerfile.kas .
