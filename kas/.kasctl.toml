@@ -1,10 +1,10 @@
 distros = [
-    "helios9-distro",
+  "helios9-distro",
 ]
 
 targets = [
-    "helios9-image-minimal",
-    "helios9-image-wwan",
+  "helios9-image-minimal",
+  "helios9-image-wwan",
 ]
 
 [layer]

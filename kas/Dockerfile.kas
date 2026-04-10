@@ -10,6 +10,8 @@ ARG USER_NAME=kas
 ARG USER_ID=${USER_ID}
 
 RUN useradd -u ${USER_ID} -m -s /bin/bash ${USER_NAME}
+RUN gpasswd -a ${USER_NAME} dialout
+RUN gpasswd -a ${USER_NAME} plugdev
 
 USER $USER_NAME
 WORKDIR /home/${USER_NAME}
@@ -18,7 +20,6 @@ ENV LANG="en_US.UTF-8"
 ENV LANGUAGE="en_US:en"
 ENV LC_ALL="en_US.UTF-8"
 ENV PATH="/home/${USER_NAME}/.local/bin:${PATH}"
-ENV QB_SLIRP_OPT="-nic user,model=virtio-net-pci"
 
 RUN uv python install 3.13 --install-dir /home/${USER_NAME}/.local/bin
 RUN uv venv .venv

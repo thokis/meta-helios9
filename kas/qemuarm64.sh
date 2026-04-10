@@ -4,7 +4,6 @@ set -e
 
 docker run \
     --rm \
-    --user "$(id -u):$(id -g)" \
     -it \
     -e "SSH_AUTH_SOCK=/ssh-agent" \
     -v "${SSH_AUTH_SOCK}:/ssh-agent" \
@@ -17,7 +16,6 @@ docker run \
     --network=host \
     --privileged \
     --rm \
-    --user "$(id -u):$(id -g)" \
     -it \
     -e "SSH_AUTH_SOCK=/ssh-agent" \
     -v "${SSH_AUTH_SOCK}:/ssh-agent" \

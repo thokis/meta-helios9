@@ -5,14 +5,17 @@ LICENSE = "CLOSED"
 inherit core-image
 
 IMAGE_INSTALL:append = " \
+    coreutils \
     e2fsprogs-resize2fs \
+    networkmanager \
+    openssh-sftp-server \
+    procps \
+    tzdata \
+    tzdata-europe \
+    usbutils \
     util-linux \
     \
     kernel-modules \
-    \
-    networkmanager \
-    \
-    openssh-sftp-server \
 "
 
 IMAGE_FEATURES:append = " ssh-server-dropbear"

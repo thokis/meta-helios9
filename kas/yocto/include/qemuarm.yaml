@@ -12,6 +12,7 @@ repos:
 local_conf_header:
     qemu-usb: |-
         PACKAGECONFIG:append:pn-qemu-system-native = " libusb"
+        PACKAGECONFIG:append:pn-qemu-helper-native = " libusb"
     qmeu-serial: |-
         QB_KERNEL_CMDLINE_APPEND:append = " console=ttyAMA0"
     qemu-wic: |-
